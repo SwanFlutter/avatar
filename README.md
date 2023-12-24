@@ -14,6 +14,7 @@ This is a complete avatar package that you can use for your profile and avatar
 ✔️ Use ImageNetwork . 
 
 
+![Capture1](https://github.com/SwanFlutter/avatar/assets/151648897/0f8128d3-f7b6-4a64-ba20-18d0c3574ff1)
 
 
 ## Getting started
