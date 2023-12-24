@@ -1,18 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 
+import 'dart:io';
+
 import 'package:avatar/src/tools/gradiant_random_tools.dart';
 import 'package:flutter/material.dart';
+
 import 'tools/text_to-color.dart';
 import 'widget/avatar_circle.dart';
 import 'widget/profile.dart';
-import 'dart:io';
 
 typedef OnPickerChange = void Function(File file);
 
 class Avatar {
   Avatar._();
 
-  static Widget avatarCircle({
+  static Widget circle({
     /// [onTapAvatar]: A callback function for when the avatar is tapped.
     void Function()? onTapAvatar,
 
@@ -38,17 +40,11 @@ class Avatar {
     Gradient? gradientWidthBorder =
         const LinearGradient(colors: [Colors.blue, Colors.deepPurple]),
 
-    /// [colorShadow]: The shadow color of the profile (can be null).
-    final Color? colorShadow,
+    /// [elevation]: create shadow widget  (can be null).
+    final double elevation = 0,
 
-    /// [offsetX]: The horizontal shadow offset (can be null).
-    final double? offsetX,
-
-    /// [offsetY]: The vertical shadow offset (can be null).
-    final double? offsetY,
-
-    /// [blurRadius]: The shadow blur radius (can be null).
-    final double? blurRadius,
+    ///[shadowColor]: elevation color .
+    final Color shadowColor = Colors.black,
 
     /// [text]: The text to display on the profile.
     required String? text,
@@ -77,7 +73,7 @@ class Avatar {
       backgroundColor = backgroundColor;
     }
 
-    return AvatarCircle(
+    return Circle(
       onTapAvatar: onTapAvatar,
       widthBorder: widthBorder,
       radius: radius,
@@ -86,39 +82,69 @@ class Avatar {
       backgroundColor: backgroundColor,
       gradientBackgroundColor: gradientBackgroundColor,
       gradientWidthBorder: gradientWidthBorder,
-      colorShadow: colorShadow,
-      offsetX: offsetX,
-      offsetY: offsetY,
-      blurRadius: blurRadius,
+      elevation: elevation,
       text: text,
       style: style,
       randomColor: randomColor,
       randomGradient: randomGradient,
       isBorderAvatar: isBorderAvatar,
+      shadowColor: shadowColor,
     );
   }
 
   static Widget profile({
+    /// [text]: The text to display on the profile.
+    required String? text,
+
+    /// [widthBorder]: The border width of the profile [widthBorder = 0.0].
     final double widthBorder = 0.0,
+
+    /// [radius]: The radius of the profile [radius = 35].
     double? radius = 35,
+
+    /// [image]: The imageAssets for the profile.
     final String? image,
+
+    /// [imageNetwork]: The image URL for the profile.
     final String? imageNetwork,
+
+    /// [backgroundColor]: The background color of the profile (can be null).
     Color? backgroundColor,
+
+    /// [gradientBackgroundColor]: The gradient background of the profile (can be null).
     Gradient? gradientBackgroundColor,
+
+    /// [gradientWidthBorder]: The gradient for the profile's border (default: linear gradient from blue to deep purple).
     Gradient? gradientWidthBorder =
         const LinearGradient(colors: [Colors.blue, Colors.deepPurple]),
-    final Color? colorShadow,
-    final double? offsetX,
-    final double? offsetY,
-    final double? blurRadius,
-    required String? text,
+
+    /// [style]: The text style (default: font size 25, white color, and bold).
     final TextStyle? style = const TextStyle(
         fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+
+    /// [backgroundColorCamera] : color background picker
     final Color backgroundColorCamera = Colors.white,
+
+    /// [icon]: icon picker
     final IconData? icon = Icons.camera,
+
+    /// [iconColor]: color picker icon
     final Color iconColor = Colors.black,
+
+    /// [randomColor]: A boolean flag for randomizing the background color of the profile.
     bool randomColor = true,
+
+    /// [randomGradient]: A boolean flag for randomizing the background gradient of the profile.
     bool randomGradient = false,
+
+    ///[elevation]: elevation color.
+    final double elevation = 0,
+
+    /// [shadowColor]: create shadow widget  (can be null).
+    final Color shadowColor = Colors.black,
+
+    ///[onPickerChange ]:is an optional property in the [Picker] class that allows you to call a callback when the picker value changes.
+    /// This callback has a parameter named value that passes the new value of the picker to it.
     final OnPickerChange? onPickerChange,
 
     /// The isBorderAvatar parameter, if true, creates a border for the avatar.
@@ -142,10 +168,6 @@ class Avatar {
       backgroundColor: backgroundColor,
       gradientWidthBorder: gradientWidthBorder,
       gradientBackgroundColor: gradientBackgroundColor,
-      colorShadow: colorShadow,
-      offsetX: offsetX,
-      offsetY: offsetY,
-      blurRadius: blurRadius,
       text: text,
       style: style,
       backgroundColorCamera: backgroundColorCamera,
@@ -155,6 +177,8 @@ class Avatar {
       randomGradient: randomGradient,
       onPickerChange: onPickerChange,
       isBorderAvatar: isBorderAvatar,
+      shadowColor: shadowColor,
+      elevation: elevation,
     );
   }
 }

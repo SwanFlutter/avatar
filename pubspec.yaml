@@ -1,7 +1,7 @@
 name: avatar
-description: A new Flutter project.
+description: This is a complete avatar package that you can use for your profile and avatar.
 version: 0.0.1
-homepage:
+homepage: https://github.com/SwanFlutter/avatar.git
 
 environment:
   sdk: '>=2.19.0 <4.0.0'

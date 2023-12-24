@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:avatar/avatar.dart';
+import 'package:flutter/material.dart';
 
 class AvatarExample extends StatefulWidget {
   const AvatarExample({Key? key}) : super(key: key);
@@ -91,7 +91,7 @@ class _AvatarExampleState extends State<AvatarExample> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Avatar.avatarCircle(
+                      Avatar.circle(
                         onTapAvatar: () {},
                         radius: 35,
                         text: avatar[index],

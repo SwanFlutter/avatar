@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../tools/gradiant_random_tools.dart';
 import '../tools/text_to-color.dart';
 
-extension AvatarCircleExtensions on AvatarCircle {
+extension AvatarCircleExtensions on Circle {
   static String initials(String text) {
     String result = "";
     List<String> words = text.split(" ");
@@ -21,7 +21,7 @@ extension AvatarCircleExtensions on AvatarCircle {
   }
 }
 
-class AvatarCircle extends StatelessWidget {
+class Circle extends StatelessWidget {
   void Function()? onTapAvatar;
   final double widthBorder;
   final double? radius;
@@ -30,15 +30,17 @@ class AvatarCircle extends StatelessWidget {
   Color? backgroundColor;
   Gradient? gradientBackgroundColor;
   Gradient? gradientWidthBorder;
-  final Color? colorShadow;
-  final double? offsetX;
-  final double? offsetY;
-  final double? blurRadius;
+  final double elevation;
+  final Color? shadowColor;
   final String? text;
   final TextStyle? style;
+
+  /// The isBorderAvatar parameter, if true, creates a border for the avatar.
+  /// This border contains a circular border with a default width of 5 and a color of LinearGradient.
+  /// If this parameter is false, no border will be created for the avatar.
   final bool isBorderAvatar;
 
-  AvatarCircle({
+  Circle({
     Key? key,
     required this.text,
     this.onTapAvatar,
@@ -47,12 +49,10 @@ class AvatarCircle extends StatelessWidget {
     this.imageNetwork,
     this.backgroundColor,
     this.gradientBackgroundColor,
+    this.shadowColor = Colors.black,
     this.gradientWidthBorder =
         const LinearGradient(colors: [Colors.blue, Colors.deepPurple]),
-    this.colorShadow,
-    this.offsetX,
-    this.offsetY,
-    this.blurRadius,
+    this.elevation = 0,
     this.widthBorder = 5.0,
     this.isBorderAvatar = false,
     this.style = const TextStyle(
@@ -81,6 +81,57 @@ class AvatarCircle extends StatelessWidget {
                 gradientColors: gradientWidthBorder,
                 withBorder: widthBorder,
               ),
+              child: Material(
+                type: MaterialType.circle,
+                elevation: elevation,
+                shadowColor: shadowColor,
+                color: Colors.transparent,
+                borderRadius: null,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: radius != null ? radius! * 2.2 : 35,
+                  width: radius != null ? radius! * 2.2 : 35,
+                  decoration: BoxDecoration(
+                    color: backgroundColor,
+                    gradient: gradientBackgroundColor,
+                    shape: BoxShape.circle,
+                    // ignore: unnecessary_null_comparison
+                    image: imagePicker != null
+                        ? DecorationImage(
+                            image: FileImage(imagePicker),
+                            fit: BoxFit.cover,
+                          )
+                        : imageNetwork != null
+                            ? DecorationImage(
+                                image: Image.network(imageNetwork!).image,
+                                fit: BoxFit.cover,
+                              )
+                            : image != null
+                                ? DecorationImage(
+                                    image: Image.asset(image!).image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                  ),
+                  // ignore: unnecessary_null_comparison
+                  child: (imagePicker == null &&
+                          imageNetwork == null &&
+                          image == null &&
+                          text != null)
+                      ? Text(
+                          AvatarCircleExtensions.initials(text!),
+                          style: style,
+                        )
+                      : const Text(''),
+                ),
+              ),
+            )
+          : Material(
+              type: MaterialType.circle,
+              elevation: elevation,
+              shadowColor: shadowColor,
+              color: Colors.transparent,
+              borderRadius: null,
               child: Container(
                 alignment: Alignment.center,
                 height: radius != null ? radius! * 2.2 : 35,
@@ -106,13 +157,6 @@ class AvatarCircle extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 )
                               : null,
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorShadow ?? Colors.grey,
-                      offset: Offset(offsetX ?? 0.0, offsetY ?? 3.0), //(x,y)
-                      blurRadius: blurRadius ?? 6.0,
-                    ),
-                  ],
                 ),
                 // ignore: unnecessary_null_comparison
                 child: (imagePicker == null &&
@@ -125,50 +169,6 @@ class AvatarCircle extends StatelessWidget {
                       )
                     : const Text(''),
               ),
-            )
-          : Container(
-              alignment: Alignment.center,
-              height: radius != null ? radius! * 2.2 : 35,
-              width: radius != null ? radius! * 2.2 : 35,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                gradient: gradientBackgroundColor,
-                shape: BoxShape.circle,
-                // ignore: unnecessary_null_comparison
-                image: imagePicker != null
-                    ? DecorationImage(
-                        image: FileImage(imagePicker),
-                        fit: BoxFit.cover,
-                      )
-                    : imageNetwork != null
-                        ? DecorationImage(
-                            image: Image.network(imageNetwork!).image,
-                            fit: BoxFit.cover,
-                          )
-                        : image != null
-                            ? DecorationImage(
-                                image: Image.asset(image!).image,
-                                fit: BoxFit.cover,
-                              )
-                            : null,
-                boxShadow: [
-                  BoxShadow(
-                    color: colorShadow ?? Colors.grey,
-                    offset: Offset(offsetX ?? 0.0, offsetY ?? 3.0), //(x,y)
-                    blurRadius: blurRadius ?? 6.0,
-                  ),
-                ],
-              ),
-              // ignore: unnecessary_null_comparison
-              child: (imagePicker == null &&
-                      imageNetwork == null &&
-                      image == null &&
-                      text != null)
-                  ? Text(
-                      AvatarCircleExtensions.initials(text!),
-                      style: style,
-                    )
-                  : const Text(''),
             ),
     );
   }

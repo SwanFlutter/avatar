@@ -1,9 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 import '../tools/gradiant_random_tools.dart';
 import '../tools/gradient_circle_painter.dart';
@@ -26,24 +27,56 @@ extension ProfileExtensions on Profile {
 }
 
 class Profile extends StatefulWidget {
-  final double widthBorder;
-  double? radius;
-  final String? image;
-  final String? imageNetwork;
-  Color? backgroundColor;
-  Gradient? gradientBackgroundColor;
-  Gradient? gradientWidthBorder;
-  final Color? colorShadow;
-  final double? offsetX;
-  final double? offsetY;
-  final double? blurRadius;
+  /// [text]: The text to display on the profile.
   final String? text;
+
+  /// [widthBorder]: The border width of the profile [widthBorder = 0.0].
+  final double widthBorder;
+
+  /// [radius]: The radius of the profile [radius = 35].
+  double? radius;
+
+  /// [image]: The imageAssets for the profile.
+  final String? image;
+
+  /// [imageNetwork]: The image URL for the profile.
+  final String? imageNetwork;
+
+  /// [backgroundColor]: The background color of the profile (can be null).
+  Color? backgroundColor;
+
+  /// [gradientBackgroundColor]: The gradient background of the profile (can be null).
+  Gradient? gradientBackgroundColor;
+
+  /// [gradientWidthBorder]: The gradient for the profile's border (default: linear gradient from blue to deep purple).
+  Gradient? gradientWidthBorder;
+
+  /// [style]: The text style (default: font size 25, white color, and bold).
   final TextStyle? style;
+
+  /// [backgroundColorCamera] : color background picker
   final Color backgroundColorCamera;
+
+  /// [icon]: icon picker
   final IconData? icon;
+
+  /// [iconColor]: color picker icon
   final Color iconColor;
+
+  ///[onPickerChange ]:is an optional property in the [Picker] class that allows you to call a callback when the picker value changes.
+  /// This callback has a parameter named value that passes the new value of the picker to it.
   final OnPickerChange? onPickerChange;
+
+  /// The isBorderAvatar parameter, if true, creates a border for the avatar.
+  /// This border contains a circular border with a default width of 5 and a color of LinearGradient.
+  /// If this parameter is false, no border will be created for the avatar.
   final bool isBorderAvatar;
+
+  ///[elevation]: elevation color.
+  final double elevation;
+
+  /// [shadowColor]: create shadow widget  (can be null).
+  final Color? shadowColor;
   Profile({
     Key? key,
     required this.radius,
@@ -52,10 +85,8 @@ class Profile extends StatefulWidget {
     this.image,
     this.imageNetwork,
     this.gradientBackgroundColor,
-    this.colorShadow,
-    this.offsetX,
-    this.offsetY,
-    this.blurRadius,
+    this.elevation = 0,
+    this.shadowColor = Colors.black,
     this.isBorderAvatar = false,
     this.backgroundColor = Colors.green,
     this.gradientWidthBorder =
@@ -98,6 +129,56 @@ class _ProfileState extends State<Profile> {
                     gradientColors: widget.gradientWidthBorder,
                     withBorder: widget.widthBorder,
                   ),
+                  child: Material(
+                    type: MaterialType.circle,
+                    elevation: widget.elevation,
+                    shadowColor: widget.shadowColor,
+                    color: Colors.transparent,
+                    borderRadius: null,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: widget.radius != null ? widget.radius! * 2.2 : 35,
+                      width: widget.radius != null ? widget.radius! * 2.2 : 35,
+                      decoration: BoxDecoration(
+                        color: widget.backgroundColor,
+                        gradient: widget.gradientBackgroundColor,
+                        shape: BoxShape.circle,
+                        image: image != null
+                            ? DecorationImage(
+                                image: FileImage(image!),
+                                fit: BoxFit.cover,
+                              )
+                            : widget.imageNetwork != null
+                                ? DecorationImage(
+                                    image: Image.network(widget.imageNetwork!)
+                                        .image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : widget.image != null
+                                    ? DecorationImage(
+                                        image: Image.asset(widget.image!).image,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                      ),
+                      child: (image == null &&
+                              widget.imageNetwork == null &&
+                              widget.image == null &&
+                              widget.text != null)
+                          ? Text(
+                              ProfileExtensions.initials(widget.text!),
+                              style: widget.style,
+                            )
+                          : const Text(''),
+                    ),
+                  ),
+                )
+              : Material(
+                  type: MaterialType.circle,
+                  elevation: widget.elevation,
+                  shadowColor: widget.shadowColor,
+                  borderRadius: null,
+                  color: Colors.transparent,
                   child: Container(
                     alignment: Alignment.center,
                     height: widget.radius != null ? widget.radius! * 2.2 : 35,
@@ -123,14 +204,6 @@ class _ProfileState extends State<Profile> {
                                       fit: BoxFit.cover,
                                     )
                                   : null,
-                      boxShadow: [
-                        BoxShadow(
-                          color: widget.colorShadow ?? Colors.grey,
-                          offset: Offset(
-                              widget.offsetX ?? 0.0, widget.offsetY ?? 3.0),
-                          blurRadius: widget.blurRadius ?? 6.0,
-                        ),
-                      ],
                     ),
                     child: (image == null &&
                             widget.imageNetwork == null &&
@@ -142,50 +215,6 @@ class _ProfileState extends State<Profile> {
                           )
                         : const Text(''),
                   ),
-                )
-              : Container(
-                  alignment: Alignment.center,
-                  height: widget.radius != null ? widget.radius! * 2.2 : 35,
-                  width: widget.radius != null ? widget.radius! * 2.2 : 35,
-                  decoration: BoxDecoration(
-                    color: widget.backgroundColor,
-                    gradient: widget.gradientBackgroundColor,
-                    shape: BoxShape.circle,
-                    image: image != null
-                        ? DecorationImage(
-                            image: FileImage(image!),
-                            fit: BoxFit.cover,
-                          )
-                        : widget.imageNetwork != null
-                            ? DecorationImage(
-                                image:
-                                    Image.network(widget.imageNetwork!).image,
-                                fit: BoxFit.cover,
-                              )
-                            : widget.image != null
-                                ? DecorationImage(
-                                    image: Image.asset(widget.image!).image,
-                                    fit: BoxFit.cover,
-                                  )
-                                : null,
-                    boxShadow: [
-                      BoxShadow(
-                        color: widget.colorShadow ?? Colors.grey,
-                        offset: Offset(
-                            widget.offsetX ?? 0.0, widget.offsetY ?? 3.0),
-                        blurRadius: widget.blurRadius ?? 6.0,
-                      ),
-                    ],
-                  ),
-                  child: (image == null &&
-                          widget.imageNetwork == null &&
-                          widget.image == null &&
-                          widget.text != null)
-                      ? Text(
-                          ProfileExtensions.initials(widget.text!),
-                          style: widget.style,
-                        )
-                      : const Text(''),
                 ),
           Positioned(
             bottom: widget.radius != null ? widget.radius! / 11 : 0,

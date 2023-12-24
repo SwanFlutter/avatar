@@ -3,7 +3,18 @@ This is a complete avatar package that you can use for your profile and avatar
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+**Features:**  
+✔️ Initial Text: Displaying initial text for avatars or placeholders.  
+✔️ Random Colors: Generating random colors for various elements.  
+✔️ Random Linear Gradient: Generating random linear gradient colors. 
+✔️ Avatar Profile: Creating avatars for profiles or user representation. 
+✔️ Border Avatar: create a border around the avatar 
+✔️ gradient Width Border: Create a gradient color for the borders 
+✔️ Use ImageAssets  
+✔️ Use ImageNetwork  
+
+
+
 
 ## Getting started
 
@@ -61,7 +72,7 @@ import 'package:avatar/avatar.dart';
 ## example
 
 ```dart
- Avatar.avatarCircle(
+ Avatar.circle(
 onTapAvatar: () {},
 radius: 35,
 text: avatar[index],
@@ -79,17 +90,8 @@ randomColor: false,
 ),                           
 ```
 
-
-```dart
-ImageBlur.ImageDownloadBlur(
-imageUrl: imageUrls[index],
-),
-```
-
 ## Additional information
 
-If you have any issues, questions, or suggestions related to this package, please feel free to contact us at [zagros.development.group@gmail.com](mailto:zagros.development.group@gmail.com). We welcome your feedback and will do our best to address any problems or provide assistance.
-
-For more information about this package, you can also visit our [GitHub repository](https://github.com/Swan1993/image_blur) where you can find additional resources, contribute to the package's development, and file issues or bug reports. We appreciate your contributions and feedback, and we aim to make this package as useful as possible for our users.
-
+If you have any issues, questions, or suggestions related to this package, please feel free to contact us at [swan.dev1993@gmail.com](mailto:swan.dev1993@gmail.com). We welcome your feedback and will do our best to address any problems or provide assistance.
+For more information about this package, you can also visit our [GitHub repository](https://github.com/SwanFlutter/avatar.git) where you can find additional resources, contribute to the package's development, and file issues or bug reports. We appreciate your contributions and feedback, and we aim to make this package as useful as possible for our users.
 Thank you for using our package, and we look forward to hearing from you!
