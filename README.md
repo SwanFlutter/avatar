@@ -8,10 +8,10 @@ This is a complete avatar package that you can use for your profile and avatar
 ✔️ Random Colors: Generating random colors for various elements.  
 ✔️ Random Linear Gradient: Generating random linear gradient colors. 
 ✔️ Avatar Profile: Creating avatars for profiles or user representation. 
-✔️ Border Avatar: create a border around the avatar 
-✔️ gradient Width Border: Create a gradient color for the borders 
-✔️ Use ImageAssets  
-✔️ Use ImageNetwork  
+✔️ Border Avatar: create a border around the avatar .
+✔️ gradient Width Border: Create a gradient color for the borders .
+✔️ Use ImageAssets . 
+✔️ Use ImageNetwork . 
 
 
 
