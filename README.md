@@ -1,3 +1,5 @@
+Have a cup of coffee.
+[![1281229923](https://github.com/SwanFlutter/avatar/assets/151648897/a83d891b-7e8d-4d48-b0aa-ec34b81bc688)](https://www.swanflutterdev.site/pay.html)
 
 This is a complete avatar package that you can use for your profile and avatar
 
